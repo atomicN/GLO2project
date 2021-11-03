@@ -3,6 +3,9 @@
 import timer from './modules/timer';
 import menu from './modules/menu';
 import modal from './modules/modal';
-timer('1 november 2021');
+import validate from './modules/validation';
+
+timer('1 january 2022');
 menu();
 modal();
+validate();
