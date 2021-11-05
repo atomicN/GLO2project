@@ -1,9 +1,5 @@
 const menu = () => {
-    const menuBtn = document.querySelector('.menu'),
-        menu = document.querySelector('menu'),
-        closeBtn = menu.querySelector('.close-btn'),
-        menuItems = menu.querySelectorAll('ul>li>a'),
-        mouseScroll = document.getElementById('mouse-scroll');
+    const menu = document.querySelector('menu');
 
     const handleMenu = () => {
         menu.classList.toggle('active-menu');
@@ -16,21 +12,26 @@ const menu = () => {
         });
     };
 
-    menuBtn.addEventListener('click', handleMenu);
-    closeBtn.addEventListener('click', handleMenu);
-
-    mouseScroll.addEventListener('click', event => {
-        event.preventDefault();
-        scroll(document.getElementById('service-block'));
-    });
-
-    menuItems.forEach( item => {
-        item.addEventListener('click', event => {
-            event.preventDefault();
-            const blockID = item.getAttribute('href').substr(1);
+    document.addEventListener('click', e => {
+        const target = e.target;
+        if (menu.classList.contains('active-menu')){
+            if (target.classList.contains('close-btn')) handleMenu();
+            if (!target.closest('menu')) handleMenu();
+        }
+        if (target.classList.contains('menu') || target.closest('.menu')){ 
+            handleMenu();
+        }
+        if (target.classList.contains('menu-item')){
+            e.preventDefault();
+            const blockID = target.getAttribute('href').substr(1);
             scroll(document.getElementById(blockID));
             handleMenu();
-        });
+        }
+        if (target.id == 'mouse-scroll' || target.closest('#mouse-scroll')) {
+            e.preventDefault();
+            scroll(document.getElementById('service-block'));
+        }
     });
+    
 };
     export default menu;

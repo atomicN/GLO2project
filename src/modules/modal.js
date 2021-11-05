@@ -3,6 +3,11 @@ const modal = () => {
         buttons = document.querySelectorAll('.popup-btn'),
         closeBtn = modal.querySelector('.popup-close');
 
+    const closeModal = () => {
+        modal.style.transform = 'translateX(9999px)';
+        modal.style.opacity = '0';
+    };
+
     const animateModal = () => {
         modal.style.cssText = `
                             display: block;
@@ -18,13 +23,17 @@ const modal = () => {
             });
         });
 
-        closeBtn.addEventListener('click', () => {
-            modal.style.transform = 'translateX(9999px)';
-            modal.style.opacity = '0';
+        modal.addEventListener('click', e => {
+            const target = e.target;
+            console.log(target);
+            if (!target.closest('.popup-content') || target.classList.contains('popup-close')){
+                closeModal();
+            }
         });
     };
 
 
+    
     if (document.documentElement.clientWidth <= 768) {
         buttons.forEach( btn => {
             btn.addEventListener('click', event => {
@@ -32,8 +41,12 @@ const modal = () => {
             });
         });
 
-        closeBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
+        modal.addEventListener('click', e => {
+            const target = e.target;
+            console.log(target);
+            if (!target.closest('.popup-content') || target.classList.contains('popup-close')){
+                modal.style.display = 'none';
+            }
         });
     }
     else animateModal();
