@@ -25,6 +25,7 @@ const calc = (price = 15000) => {
             totalValue = price * calcTypeValue * calcSquareValue * calcCountValue * calcDayValue;
         } else totalValue = 0;
         total.textContent = totalValue;
+        
     };
 
         calcBlock.addEventListener('input', e => {

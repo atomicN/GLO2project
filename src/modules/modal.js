@@ -1,3 +1,5 @@
+import {animate} from './helpers';
+
 const modal = () => {
     const modal = document.querySelector('.popup'),
         buttons = document.querySelectorAll('.popup-btn'),
@@ -12,20 +14,26 @@ const modal = () => {
         modal.style.cssText = `
                             display: block;
                             opacity: 0;
-                            transition: opacity .3s;
                             transform: translateX(9999px);
                         `;
     
         buttons.forEach( btn => {
-            btn.addEventListener('click', event => {
-                modal.style.transform = 'translateX(0)';
-                modal.style.opacity = '1';
+            btn.addEventListener('click', event => {               
+                animate({
+                        timing(timeFraction){
+                            return timeFraction;
+                        },
+                        draw(progress){
+                            modal.style.transform = 'translateX(0)';
+                            modal.style.opacity = progress;
+                        },
+                        duration: 200});
             });
         });
 
         modal.addEventListener('click', e => {
             const target = e.target;
-            console.log(target);
+
             if (!target.closest('.popup-content') || target.classList.contains('popup-close')){
                 closeModal();
             }
